@@ -1,28 +1,15 @@
 import { useState } from 'react'
+import {BaseColaboradores} from './components/Colaboradores';
+import Filter from './components/Filter';
+import Form from './components/Form';
 
 
-export const BaseColaboradores = [
-  {
-  id: "1",
-  nombre: "Colaborador 1",
-  correo: "colaborador1@colaborador1.com"
-  },
-  {
-  id: "2",
-  nombre: "Colaborador 2",
-  correo: "colaborador2@colaborador2.com"
-  },
-  {
-  id: "3",
-  nombre: "Colaborador 3",
-  correo: "colaborador3@colaborador3.com"
-  },
-  ]
-  
+
   const App = ( ) => {
   const [lista, setLista]=useState(BaseColaboradores);
   const [nombre, setNombre]=useState("");
   const [correo, setCorreo]=useState("");
+  const [buscar, setBuscar]=useState("");
 
 const handleSubmit=(e)=>{
   e.preventDefault();
@@ -47,9 +34,8 @@ const handleOnChangeCorreo=(e)=>{
  };
 
  const handleFilter=(e)=>{
-  const filtered=lista.filter((elem)=>  elem.nombre.includes(e.target.value) )
-  setLista(filtered)
-  console.log(filtered)
+  setBuscar(e.target.value)
+  console.log(buscar)
 
  };
 
@@ -63,22 +49,16 @@ const handleOnChangeCorreo=(e)=>{
  
     return(
       
-      <div className="container" >
-        <div>
-            <input name="filtrar" onChange={handleFilter}></input>
-        </div>
-        <form onSubmit={handleSubmit}>
-          <input name="nombre" onChange={handleOnChangeNombre}></input>
-          <input name="correo" onChange={handleOnChangeCorreo}></input>
-          <button>Agregar</button>
-        </form>
-
+      <>
+        <Filter onChange={handleFilter}/>
+        <Form onSubmit={handleSubmit} onChangeCorreo={handleOnChangeCorreo} onChangeNombre={handleOnChangeNombre}/>
+        <h2>Lista de Colaboradores</h2>
         <ul>
-        { lista.map(({id,nombre,correo})=> (<li key={id}>{nombre}<button onClick={()=>{handleDelete(id)}}>Eliminar</button></li>)
+        { lista.filter((elem)=>  elem.nombre.toLowerCase().includes(buscar.toString().toLowerCase())).map(({id,nombre,correo})=> (<li key={id}>{nombre} - {correo}<button className='btn btn-danger m-1' onClick={()=>{handleDelete(id)}}>Eliminar</button></li>)
         )}
         </ul>
         
-      </div>
+      </>
     );
   
   };

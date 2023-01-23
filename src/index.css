@@ -1,0 +1,19 @@
+@import url(https://necolas.github.io/normalize.css/8.0.1/normalize.css);
+.filterStyle{
+    background-color: black;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    height: 20vh;
+    width: 100vw;
+    justify-content: space-between;
+    align-items: center;
+}
+.formStyle{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 30vh;
+    width: 100vw;
+}
